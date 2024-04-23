@@ -15,9 +15,7 @@ services:
       - OLLAMA_BASE_URL
       - CUSTOM_NAME
       - OPENAI_API_BASE_URLS
-      -
-
-
+      - OPENAI_API_KEYS
     networks:
       - ollama
       - cloud-net
@@ -36,20 +34,4 @@ networks:
   cloud-net:
     external: true
 
-
-docker run -d -p 3000:8080 --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
-
-docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://chaty.bentleyhensel.com -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-
-
-docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main.
-
-
-kNjPWGb2DLQg4ccuzl0J2Wir3uXBZgbhA
-
-
-https://litellm.vercel.app/docs/proxy/configs#quick-start
-
-
-https://docs.openwebui.com/getting-started/#quick-start-with-docker-
 
