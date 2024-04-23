@@ -1,9 +1,9 @@
 version: "3.8"
 
 services:
-  open-webui:
-    container_name: open-webui
-    hostname: open-webui
+  ollama-webui:
+    container_name: ollama-webui
+    hostname: ollama-webui
     image: ghcr.io/open-webui/open-webui:main
     restart: unless-stopped
     ports:
