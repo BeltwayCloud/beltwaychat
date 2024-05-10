@@ -59,7 +59,8 @@ services:
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              capabilities: [gpu]
 
   # Support Nodes
   ollama-node-one:
@@ -73,7 +74,8 @@ services:
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              capabilities: [gpu]
 
 
   ollama-node-two:
@@ -87,7 +89,8 @@ services:
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              capabilities: [gpu]
 
 # Databases
   chroma-server:
