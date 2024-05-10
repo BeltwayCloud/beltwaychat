@@ -5,7 +5,7 @@ services:
   openwebui:
     container_name: openwebui
     hostname: openwebui
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:cuda
     restart: unless-stopped
     ports:
       - ${PORT}:${PORT}
@@ -15,7 +15,7 @@ services:
     environment:
       WEBUI_NAME: ${WEBUI_NAME}
       WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
-      USE_CUDA_DOCKER: ${USE_CUDA_DOCKER}
+      # USE_CUDA_DOCKER: ${USE_CUDA_DOCKER}
       PORT: ${PORT}
       # Postgres
       DATABASE_URL: ${DATABASE_URL}/${POSTGRES_DATABASE}
