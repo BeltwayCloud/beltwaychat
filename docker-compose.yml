@@ -5,7 +5,7 @@ services:
   openwebui:
     container_name: openwebui
     hostname: openwebui
-    image: ghcr.io/open-webui/open-webui:cuda
+    image: ghcr.io/open-webui/open-webui:main
     restart: unless-stopped
     ports:
       - ${PORT}:${PORT}
@@ -15,7 +15,7 @@ services:
     environment:
       WEBUI_NAME: ${WEBUI_NAME}
       WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY}
-      USE_CUDA_DOCKER: ${USE_CUDA_DOCKER}
+      # USE_CUDA_DOCKER: ${USE_CUDA_DOCKER}
       PORT: ${PORT}
       # Postgres
       DATABASE_URL: ${DATABASE_URL}/${POSTGRES_DATABASE}
@@ -55,42 +55,26 @@ services:
     networks:
       - cloud-net
       - ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
+
 
   # Support Nodes
   ollama-node-one:
     container_name: ollama-node-one
-    image: ghcr.io/open-webui/open-webui:cuda
+    image: ghcr.io/open-webui/open-webui:main
     environment:
       NODE_ID: node-one
     networks:
       - ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
 
 
   ollama-node-two:
     container_name: ollama-node-two
-    image: ghcr.io/open-webui/open-webui:cuda
+    image: ghcr.io/open-webui/open-webui:main
     environment:
       NODE_ID: node-two
     networks:
       - ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              capabilities: [gpu]
+
 
 # Databases
   chroma-server:
