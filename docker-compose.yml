@@ -155,6 +155,7 @@ services:
       - redis
     networks:
       - ollama
+      - cloud-net
 
 
 
