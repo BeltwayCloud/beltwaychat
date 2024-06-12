@@ -35,7 +35,7 @@ services:
       # RAG
       RAG_EMBEDDING_ENGINE: ${RAG_EMBEDDING_ENGINE}
       ENABLE_RAG_HYBRID_SEARCH: ${ENABLE_RAG_HYBRID_SEARCH}
-      PDF_EXTRACT_IMAGES: ${RAG_EMBEDDING_MODEL}
+      PDF_EXTRACT_IMAGES: ${PDF_EXTRACT_IMAGES}
       RAG_EMBEDDING_MODEL: ${RAG_EMBEDDING_MODEL}
       CHUNK_SIZE: ${CHUNK_SIZE}
       CHUNK_OVERLAP: ${CHUNK_OVERLAP}
@@ -58,17 +58,25 @@ services:
 
 
   # Support Nodes
+
+
   ollama-node-one:
     hostname: ollama-node-one
     container_name: ollama-node-one
+    restart: unless-stopped
     image: ghcr.io/open-webui/open-webui:main
     ports:
       - 14365
       - 8080
+      - 11434
     environment:
       NODE_ID: node-one
     networks:
       - ollama
+    pull_policy: always
+    tty: true
+    volumes:
+      - ${OLLAMA_PATH}:/root/.ollama
 
 
   ollama-node-two:
@@ -76,12 +84,18 @@ services:
     ports:
       - 14365
       - 8080
+      - 11434
     container_name: ollama-node-two
     image: ghcr.io/open-webui/open-webui:main
     environment:
       NODE_ID: node-two
     networks:
       - ollama
+    pull_policy: always
+    tty: true
+    volumes:
+      - ${OLLAMA_PATH}:/root/.ollama
+    restart: unless-stopped
 
 
 # Databases
@@ -101,6 +115,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    restart: unless-stopped
 
   ollama-postgres:
     container_name: ollama-postgres
@@ -123,6 +138,7 @@ services:
       retries: 5
     networks:
       - ollama
+
 
   # Redis
   redis:
@@ -150,12 +166,14 @@ services:
       OPENAI_API_KEY: ${LITELLM_OPENAI_KEY}
       CLOUDFLARE_API_KEY: ${CLOUDFLARE_API_KEY}
       CLOUDFLARE_ACCOUNT_ID: ${CLOUDFLARE_ACCOUNT_ID}
+      STORE_MODEL_IN_DB: ${STORE_MODEL_IN_DB}
     depends_on:
       - ollama-postgres
       - redis
     networks:
       - ollama
       - cloud-net
+    restart: unless-stopped
 
 
 
