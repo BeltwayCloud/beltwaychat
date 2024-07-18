@@ -68,7 +68,7 @@ services:
       - 8080
       - "11435:11434"
     environment:
-      NODE_ID: node-one
+      NODE_ID: ollama-node-one
     networks:
       - ollama
     pull_policy: always
@@ -84,7 +84,7 @@ services:
     container_name: ollama-node-two
     image: ghcr.io/open-webui/open-webui:main
     environment:
-      NODE_ID: node-two
+      NODE_ID: ollama-node-two
     networks:
       - ollama
     pull_policy: always
@@ -93,12 +93,27 @@ services:
       - ${OLLAMA_PATH}:/root/.ollama
     restart: unless-stopped
 
+  # Pipelines service
+  pipelines:
+    container_name: pipelines
+    hostname: pipelines
+    image: ghcr.io/open-webui/pipelines:main
+    restart: unless-stopped
+    ports:
+      - 9099:9099
+    volumes:
+      - ${WEBCHAT_BASE}/pipelines:/app/pipelines
+    networks:
+      - cloud-net
+      - ollama
+
 # Databases
   chroma-server:
     image: ghcr.io/chroma-core/chroma:latest
     hostname: chroma-server
     environment:
       - IS_PERSISTENT=TRUE
+      - ALLOW_RESET=TRUE
     volumes:
       - ${CHROMA_PATH}:/chroma/chroma/
     ports:
