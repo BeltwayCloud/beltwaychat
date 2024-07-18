@@ -93,7 +93,6 @@ services:
       - ${OLLAMA_PATH}:/root/.ollama
     restart: unless-stopped
 
-
 # Databases
   chroma-server:
     image: ghcr.io/chroma-core/chroma:latest
