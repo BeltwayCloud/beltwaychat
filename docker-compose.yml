@@ -107,6 +107,7 @@ services:
       - cloud-net
       - ollama
 
+
 # Databases
   chroma-server:
     image: ghcr.io/chroma-core/chroma:latest
