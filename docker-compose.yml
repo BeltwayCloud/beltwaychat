@@ -58,8 +58,6 @@ services:
 
 
   # Support Nodes
-
-
   ollama-node-one:
     hostname: ollama-node-one
     container_name: ollama-node-one
@@ -68,7 +66,7 @@ services:
     ports:
       - 14365
       - 8080
-      - 11434
+      - "11435:11434"
     environment:
       NODE_ID: node-one
     networks:
@@ -77,14 +75,12 @@ services:
     tty: true
     volumes:
       - ${OLLAMA_PATH}:/root/.ollama
-
-
   ollama-node-two:
     hostname: ollama-node-two
     ports:
       - 14365
       - 8080
-      - 11434
+      - "11436:11434"
     container_name: ollama-node-two
     image: ghcr.io/open-webui/open-webui:main
     environment:
