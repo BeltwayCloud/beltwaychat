@@ -55,6 +55,8 @@ services:
     networks:
       - cloud-net
       - ollama
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
 
   # Support Nodes
@@ -92,6 +94,8 @@ services:
     volumes:
       - ${OLLAMA_PATH}:/root/.ollama
     restart: unless-stopped
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
 
   # Pipelines service
   pipelines:
@@ -106,6 +110,12 @@ services:
     networks:
       - cloud-net
       - ollama
+    environment:
+      - PIPELINES_URLS
+      - PIPELINES_REQUIREMENTS_PATH
+      - RESET_PIPELINES_DIR=false
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
 
 
 # Databases
@@ -127,6 +137,8 @@ services:
       timeout: 10s
       retries: 3
     restart: unless-stopped
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
 
   ollama-postgres:
     container_name: ollama-postgres
@@ -149,6 +161,8 @@ services:
       retries: 5
     networks:
       - ollama
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
 
 
   # Redis
@@ -161,6 +175,8 @@ services:
       - ${REDIS_PATH}:/data
     networks:
       - ollama
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
 
 
   # LiteLLM
@@ -185,6 +201,8 @@ services:
       - ollama
       - cloud-net
     restart: unless-stopped
+    labels:
+    - com.centurylinklabs.watchtower.enable=true
 
 
 
